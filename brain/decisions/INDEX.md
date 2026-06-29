@@ -7,6 +7,8 @@
 
 ## Recently decided
 <!-- Last 30 days. Each links to the file. -->
+- [Resolve Skill Overlap Between Domains](./2026-06-29-skills-overlap.md)
+- [Retain Domain Namespaces](./2026-06-29-retain-namespaces.md)
 
 ## Superseded
 <!-- Decisions reversed by a later decision. Both stay in the log. -->

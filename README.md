@@ -1,32 +1,32 @@
 # SoloFounderFramework
 
-O SoloFounderFramework é um ecossistema unificado para operação nativa no Antigravity 2.0. Ele une em um único ciclo síncrono a gestão de memórias, decisões de produto e a execução técnica por agentes, eliminando os atritos de transição entre papéis.
+The SoloFounderFramework is a unified ecosystem for native operation within Antigravity 2.0. It bridges memory management, product decisions, and technical execution by agents into a single synchronous loop, eliminating friction when transitioning between roles.
 
-## A Linha de Montagem
+## The Assembly Line
 
-A arquitetura do framework foi designada para operar como uma linha de montagem implacável. Os componentes não apenas existem lado a lado, mas exigem (hard-dependency) a execução uns dos outros de maneira fluída e obrigatória.
+The framework's architecture was designed to operate as a relentless assembly line. Components do not merely exist side by side; they have hard dependencies on one another, ensuring fluid and mandatory execution.
 
-- **Brain (`/brain/`)**: O repositório central de contexto e memória longa do projeto. Armazena as decisões arquiteturais.
-- **Product (`/skills/product/`)**: Os estrategistas que concebem a ideia, validam premissas e criam roadmaps e auditorias.
-- **Engineering (`/skills/engineering/`)**: Os engenheiros de software focados em Test-Driven Development e construção técnica.
+- **Brain (`/brain/`)**: The central repository for project context and long-term memory. It stores architectural decisions, hypotheses, and stakeholder interactions.
+- **Product (`/skills/product_*`)**: The strategists who conceive ideas, validate assumptions, build roadmaps, and conduct market research.
+- **Engineering (`/skills/eng_*`)**: The software engineers focused on Test-Driven Development (TDD), architecture audits, and technical execution.
 
-### Fluxo Síncrono de Trabalho
+### Synchronous Workflow
 
-A operação obedece ao seguinte pipeline de handoff automatizado, que integra Memória, Estratégia e Execução:
+The operation follows an automated handoff pipeline that integrates Memory, Strategy, and Execution:
 
 ```mermaid
 graph TD
     B[Brain: /brain/decisions/] -->|Define Constraints| W[Engineering: eng_writing-plans]
     W -->|Creates implementation_plan.md| SDD[Engineering: eng_subagent-driven-development]
     SDD -->|Writes Code & Tests| FDB[Engineering: eng_finishing-a-development-branch]
-    FDB -->|Invokes Architecture Audit| SC[Product: product_ship_check]
+    FDB -->|Invokes Architecture Audit| SC[Engineering: eng_ship-check]
     SC -->|Pass/Fail| FDB
     FDB -->|Merges| Main[Main Branch]
 ```
 
-## Como Usar
+## How to Use
 
-O manifesto único `gemini-extension.json` já expõe as ferramentas para a sessão do Antigravity. Todos os agentes que entrarem na workspace saberão instintivamente:
+The single manifest `plugin.json` exposes the toolkit to the Antigravity session. Every agent entering the workspace will instinctively know:
 
-1. Que planos técnicos (`eng_writing-plans`) não podem ser escritos sem uma inspeção prévia de `/brain/decisions/`.
-2. Que merges (`eng_finishing-a-development-branch`) estão bloqueados e exigem auditoria do estrategista (`product_ship_check`).
+1. That technical plans (`eng_writing-plans`) cannot be written without a prior inspection of `/brain/decisions/`.
+2. That merges (`eng_finishing-a-development-branch`) are blocked and require a strict technical audit (`eng_ship-check`) before completion.

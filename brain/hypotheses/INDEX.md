@@ -4,6 +4,9 @@
 
 ## Active
 <!-- Auto-maintained list of files in hypotheses/ with status `active`. -->
+- [Plugin Skills Overlap](./skills-overlap.md)
+- [Domain Overlap Between Skills](./domain-overlap.md)
+- [Refactoring and Audit Tools Belong in Engineering](./refactoring-namespace.md)
 
 ## Promoted
 <!-- Recently promoted. Each links to its corresponding decision in decisions/. -->
