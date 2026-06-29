@@ -1,32 +1,50 @@
 # SoloFounderFramework
 
-The SoloFounderFramework is a unified ecosystem for native operation within Antigravity 2.0. It bridges memory management, product decisions, and technical execution by agents into a single synchronous loop, eliminating friction when transitioning between roles.
+The SoloFounderFramework is a native agentic plugin for Antigravity 2.0. It acts as a unified assembly line integrating Memory (Brain), Strategy (Product), and Execution (Engineering) into a single synchronous loop, transforming the AI assistant into an autonomous product and engineering operator.
 
-## The Assembly Line
+## Overview
 
-The framework's architecture was designed to operate as a relentless assembly line. Components do not merely exist side by side; they have hard dependencies on one another, ensuring fluid and mandatory execution.
+Traditional AI coding assistants treat each session as a blank slate or rely on shallow context windows. This framework replaces fragmented tooling with a durable, stateful operator that executes the entire software development lifecycle—from user interviews to test-driven deployment.
 
-- **Brain (`/brain/`)**: The central repository for project context and long-term memory. It stores architectural decisions, hypotheses, and stakeholder interactions.
-- **Product (`/skills/product_*`)**: The strategists who conceive ideas, validate assumptions, build roadmaps, and conduct market research.
-- **Engineering (`/skills/eng_*`)**: The software engineers focused on Test-Driven Development (TDD), architecture audits, and technical execution.
+The architecture enforces strict boundaries and hard-dependencies between roles:
+- **Brain (`/brain/`)**: The persistent knowledge base and memory layer. It stores raw insights, durable decisions, hypotheses, and stakeholder contexts.
+- **Product (`/skills/product_*`)**: The compute layer for strategy. Product skills run discovery, evaluate risks, generate roadmaps, and triage feature requests.
+- **Engineering (`/skills/eng_*`)**: The execution layer. Engineering skills write technical implementation plans, enforce strict Red-Green-Refactor Test-Driven Development (TDD), and audit the codebase for security and performance.
 
-### Synchronous Workflow
+## The Assembly Line Workflow
 
-The operation follows an automated handoff pipeline that integrates Memory, Strategy, and Execution:
+The operation follows an automated handoff pipeline ensuring strategy drives execution, and execution is strictly verified.
 
 ```mermaid
 graph TD
-    B[Brain: /brain/decisions/] -->|Define Constraints| W[Engineering: eng_writing-plans]
+    B[Brain: /brain/decisions/] -->|Provides Constraints| W[Engineering: eng_writing-plans]
     W -->|Creates implementation_plan.md| SDD[Engineering: eng_subagent-driven-development]
-    SDD -->|Writes Code & Tests| FDB[Engineering: eng_finishing-a-development-branch]
+    SDD -->|TDD: Write Tests -> Write Code| FDB[Engineering: eng_finishing-a-development-branch]
     FDB -->|Invokes Architecture Audit| SC[Engineering: eng_ship-check]
     SC -->|Pass/Fail| FDB
     FDB -->|Merges| Main[Main Branch]
 ```
 
-## How to Use
+## Core Principles
 
-The single manifest `plugin.json` exposes the toolkit to the Antigravity session. Every agent entering the workspace will instinctively know:
+1. **Epistemic Integrity (Provenance):** The Agent must link all claims and ingested insights back to raw `/source/` files. The Brain cannot hallucinate strategy.
+2. **Strict Test-Driven Development:** No production code is written without a failing test first. `eng_test-driven-development` strictly enforces the Red-Green-Refactor protocol.
+3. **Explicit Guardrails:** The agent must halt and request human approval before creating an implementation plan or modifying source code.
 
-1. That technical plans (`eng_writing-plans`) cannot be written without a prior inspection of `/brain/decisions/`.
-2. That merges (`eng_finishing-a-development-branch`) are blocked and require a strict technical audit (`eng_ship-check`) before completion.
+## System Documentation
+
+For detailed technical specifications, refer to the reverse-engineered system documents in `/documentation/`:
+
+- [Architecture](documentation/architecture.md) — System overview, stack, auth flow, and trust boundaries.
+- [Flows](documentation/flows.md) — Permission-relevant journeys, ingestion paths, and execution flows.
+- [Permissions](documentation/permissions.md) — Human vs. Agent roles and resource access matrices.
+- [Variables](documentation/variables.md) — Context budgets and configuration limits defined in `AGENTS.md`.
+- [Automation](documentation/automation.md) — Embedded workflows for Brain Processing and Engineering Execution.
+- [Test Coverage Map](documentation/tests.md) — Proposed CI gates and internal framework validation rules.
+
+## Getting Started
+
+1. Ensure you are running the Antigravity 2.0 Agent environment.
+2. Install this plugin into your global or workspace customizations root (e.g., `~/.gemini/config/plugins/SoloFounderFramework`).
+3. The Antigravity agent will automatically discover the `plugin.json` and internalize the workflows.
+4. Interact with the agent using natural language (e.g., *"Let's build a new feature"*), or invoke explicit commands (e.g., `/brain_ingest`, `/eng_writing-plans`) to trigger specialized workflows.
