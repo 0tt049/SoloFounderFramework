@@ -140,23 +140,37 @@ def scaffold(slug, blueprint):
             f.write(content)
         print(f" - Created agent rules: {agents_md_path}")
         
-        # Create skills.json referencing the global directories instead of copying physical folders
-        import json
-        skills_json_path = os.path.join(agents_dir, "skills.json")
-        entries = [
-            {"path": os.path.join(os.path.expanduser("~"), ".gemini", "config", "plugins", "SoloFounderFramework", "library")}
-        ]
+        # Create symlinks for the specific domain skills instead of skills.json
+        sff_library_dir = os.path.join(os.path.expanduser("~"), ".gemini", "config", "plugins", "SoloFounderFramework", "library")
         
-        # For engineering, also add DevTools and Modern Web global plugins
-        if blueprint == "eng":
-            entries.append({"path": os.path.join(os.path.expanduser("~"), ".gemini", "config", "plugins", "chrome-devtools-plugin", "skills")})
-            entries.append({"path": os.path.join(os.path.expanduser("~"), ".gemini", "config", "plugins", "modern-web-guidance-plugin", "skills")})
-            
-        skills_config = {"entries": entries}
-        with open(skills_json_path, "w", encoding="utf-8") as f:
-            json.dump(skills_config, f, indent=2)
-            
-        print(f" - Created skills.json configuration pointing to global plugins: {skills_json_path}")
+        prefix_map = {
+            "eng": "eng_",
+            "ops": "ops_",
+            "pers": "pers_",
+            "prod": "product_"
+        }
+        
+        if os.path.exists(sff_library_dir):
+            prefix = prefix_map.get(blueprint)
+            if prefix:
+                count = 0
+                for item in os.listdir(sff_library_dir):
+                    if item.startswith(prefix):
+                        src_dir = os.path.join(sff_library_dir, item)
+                        dst_dir = os.path.join(skills_dir, item)
+                        
+                        if os.path.isdir(src_dir):
+                            # Create physical dir
+                            os.makedirs(dst_dir, exist_ok=True)
+                            
+                            # Symlink inner contents
+                            for inner_item in os.listdir(src_dir):
+                                src_inner = os.path.join(src_dir, inner_item)
+                                dst_inner = os.path.join(dst_dir, inner_item)
+                                os.symlink(src_inner, dst_inner)
+                                
+                            count += 1
+                print(f" - Created {count} physical skills with inner symlinks for '{prefix}*' from SoloFounderFramework")
         
         print("\nScaffolding Completed Successfully!")
         print(f"To begin working in this workspace, open the folder '{project_path}' in Antigravity.")
